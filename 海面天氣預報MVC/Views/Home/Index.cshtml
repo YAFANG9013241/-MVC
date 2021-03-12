@@ -1,0 +1,85 @@
+﻿@using 海面天氣預報MVC.Models
+@model IEnumerable<海面天氣預報MVC.Models.Weather>
+@{
+    ViewBag.Title = "海面天氣預報";
+}
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#Area').change(function () {
+                var optionIndex = $("#Area option:selected").val();
+                window.location.href = "?searchString=" + optionIndex;
+            });
+        });
+    </script>
+</head>
+<body>
+    @*<p>地區：@Html.DropDownList("weather", (SelectList)ViewBag.SelectList, "請選擇海面天氣預報地區")</p>*@
+    @using (Html.BeginForm("index", "Weathers", FormMethod.Get))
+    {
+        <p>
+            請選擇海面天氣預報地區:
+            @Html.DropDownList("Area", (SelectList)ViewBag.area, "請選擇", htmlAttributes: new { @class = "form-control", @selected = 1 })
+        </p>
+
+    }
+    <table cellpadding="0" cellspacing="0" border="1">
+        <tr>
+            <th colspan='4'>@ViewBag.areatitle</th>
+        </tr>
+        <tr>
+            <td>日期</td>
+            @foreach (var item in Model)
+            {
+                <td>@Convert.ToString(string.Format("{0:MM/dd}", item.Date))</td>
+            }
+        </tr>
+        <tr>
+            <td>天氣</td>
+            @foreach (var item in Model)
+            {
+                <td><img src="@item.Weathers"></td>
+            }
+        </tr>
+        <tr>
+            <td>風向</td>
+            @foreach (var item in Model)
+            {
+                <td>@item.WindDir</td>
+            }
+        </tr>
+        <tr>
+            <td>海浪</td>
+            @foreach (var item in Model)
+            {
+                <td>@item.WaveType</td>
+            }
+        </tr>
+        <tr>
+            <td>浪高</td>
+            @foreach (var item in Model)
+            {
+                <td>@item.WaveHeight</td>
+            }
+        </tr>
+        <tr>
+            <td>風力（級）</td>
+            @foreach (var item in Model)
+            {
+                <td>@item.WindSpeed</td>
+            }
+        </tr>
+    </table>
+</body>
+</html>
