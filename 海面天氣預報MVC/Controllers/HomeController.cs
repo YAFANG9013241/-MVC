@@ -16,7 +16,7 @@ namespace 海面天氣預報MVC.Controllers
 {
     public class HomeController : Controller
     {
-        public ActionResult Index(string searchString)
+        public ActionResult Index(int? id)
         {
             List<Weather> weatherslList = new List<Weather>();
 
@@ -59,32 +59,39 @@ namespace 海面天氣預報MVC.Controllers
             //SelectList selectList = new SelectList(query);
             //ViewBag.SelectList = selectList;
 
-            if (searchString == null)
-            {
-                searchString = "1";
-            }
+            //if (searchString == null)
+            //{
+            //    searchString = "1";
+            //}
 
-            int areaId = int.Parse(searchString);
-            var result = weatherslList.Where(t => t.Id.Equals(areaId));
-            ViewBag.area = new SelectList(weatherslList.Distinct(new PropertyComparer<Weather>("Id")), "Id", "Title", searchString);
-            ViewBag.areatitle = result.Select(y => y.Title).FirstOrDefault();
+            //var result = weatherslList.Where(t => t.Id.Equals(id));
+            //ViewBag.area = new SelectList(weatherslList.Distinct(new PropertyComparer<Weather>("Id")), "Id", "Title", searchString);
+            //ViewBag.areatitle = result.Select(y => y.Title).FirstOrDefault();
 
-            return View(result.ToList());
+            var demo = weatherslList.Select(t => new { t.Id, t.Title }).Distinct();
+            //SelectList list = new SelectList(demo, "id", "Title", selectedValue: id == null ? 1 : id);
+
+            int objId = (id == null ? 1 : (int)id);
+            var obj = demo.Where(x => x.Id == objId).FirstOrDefault();
+            SelectList list = new SelectList(demo, "id", "Title", obj);
+
+            ViewBag.area = list;
+            return View(weatherslList.Where(m => m.Id == (id == null ? 1 : id)));
         }
 
-        public ActionResult About()
-        {
-            ViewBag.Message = "Your application description page.";
+        //public ActionResult About()
+        //{
+        //    ViewBag.Message = "Your application description page.";
 
-            return View();
-        }
+        //    return View();
+        //}
 
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
+        //public ActionResult Contact()
+        //{
+        //    ViewBag.Message = "Your contact page.";
 
-            return View();
-        }
+        //    return View();
+        //}
 
         public class PropertyComparer<T> : IEqualityComparer<T>
         {
