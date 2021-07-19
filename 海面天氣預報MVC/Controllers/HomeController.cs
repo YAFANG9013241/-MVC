@@ -72,11 +72,12 @@ namespace 海面天氣預報MVC.Controllers
             //SelectList list = new SelectList(demo, "id", "Title", selectedValue: id == null ? 1 : id);
 
             int objId = (id == null ? 1 : (int)id);
-            var obj = demo.Where(x => x.Id == objId).FirstOrDefault();
-            SelectList list = new SelectList(demo, "id", "Title", obj);
+            SelectList list = new SelectList(demo, "id", "Title");
 
-            ViewBag.area = list;
-            return View(weatherslList.Where(m => m.Id == (id == null ? 1 : id)));
+            ViewBag.area = demo;
+            ViewBag.selectId = objId;
+            List<Weather> a = weatherslList.Where(m => m.Id == (id == null ? 1 : id)).ToList();
+            return View(a);
         }
 
         //public ActionResult About()

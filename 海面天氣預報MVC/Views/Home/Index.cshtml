@@ -16,12 +16,12 @@
     @*<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>*@
     <script src="~/Scripts/jquery-3.4.1.min.js"></script>
     <script>
-                            //$(document).ready(function () {
-                            //    $('#Area').change(function () {
-                            //        var optionIndex = $("#Area option:selected").val();
-                            //        window.location.href = "?id=" + optionIndex;
-                            //    });
-                            //});
+        $(document).ready(function () {
+            $('#TwArea').change(function () {
+                var optionIndex = $("#TwArea option:selected").val();
+                window.location.href = "?id=" + optionIndex;
+            });
+        });
     </script>
 </head>
 <body>
@@ -30,7 +30,7 @@
     {
         <p>
             請選擇海面天氣預報地區:
-            @Html.DropDownList("Area", new SelectList(ViewBag.area, "1"), "請選擇", new { @class = "form-control" })
+            @Html.DropDownList("TwArea", new SelectList(ViewBag.area, "Id", "Title", ViewBag.selectId), new { @class = "form-control" })
         </p>
 
     }
